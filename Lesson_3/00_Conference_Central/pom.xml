@@ -11,7 +11,7 @@
 
     <properties>
         <appengine.app.version>1</appengine.app.version>
-        <appengine.target.version>1.9.3</appengine.target.version>
+        <appengine.target.version>1.9.17</appengine.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -100,7 +100,12 @@
                 <artifactId>appengine-maven-plugin</artifactId>
                 <version>${appengine.target.version}</version>
                 <configuration>
+                    <jvmflags>
+                      <jvmflag>-Dappengine.generated.dir=/tmp/blabla</jvmflag>
+                    </jvmflags>
                     <enableJarClasses>false</enableJarClasses>
+                    <address>0.0.0.0</address>
+                    <port>8080</port>
                 </configuration>   
                  <executions>
                     <execution>

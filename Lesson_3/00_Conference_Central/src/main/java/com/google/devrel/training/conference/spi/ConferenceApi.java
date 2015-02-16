@@ -96,6 +96,7 @@ public class ConferenceApi {
 
 		// TODO 3 (In lesson 3)
 		// Save the entity in the datastore
+    ofy().save().entity(profile).now();
 
 		// Return the profile
 		return profile;
