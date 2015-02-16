@@ -120,8 +120,8 @@ public class ConferenceApi {
 
 		// load the Profile Entity
 		String userId = user.getUserId();
-		Key key = Key.create(Entity.class, userId);
-		Profile profile = (Profile)ofy().load().key(key).now();
+		Key<Profile> key = Key.create(Profile.class, userId);
+		Profile profile = ofy().load().key(key).now();
 		return profile;
 	}
 }
