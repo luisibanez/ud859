@@ -67,15 +67,15 @@ public class ConferenceApi {
         }
 
 		// TODO 1
-	    // Set the teeShirtSize to the value sent by the ProfileForm, if sent
-        // otherwise leave it as the default value
-		 if (profileForm.getTeeShirtSize() != null) {
+	  // Set the teeShirtSize to the value sent by the ProfileForm, if sent
+    // otherwise leave it as the default value
+		if (profileForm.getTeeShirtSize() != null) {
 			 teeShirtSize = profileForm.getTeeShirtSize();
-		 }
+		}
 
 		// TODO 1
-        // Set the displayName to the value sent by the ProfileForm, if sent
-        // otherwise set it to null
+    // Set the displayName to the value sent by the ProfileForm, if sent
+    // otherwise set it to null
 		displayName = profileForm.getDisplayName();
 		
 		// TODO 2
@@ -83,16 +83,23 @@ public class ConferenceApi {
 		mainEmail = user.getEmail();
 		userId = user.getUserId();
 
-        // TODO 2
-        // If the displayName is null, set it to the default value based on the user's email
-        // by calling extractDefaultDisplayNameFromEmail(...)
-		 if (displayName == null) {
-		   displayName = extractDefaultDisplayNameFromEmail(user.getEmail());
-		   }
+		Key<Profile> key = Key.create(Profile.class, userId);
+		Profile profile = ofy().load().key(key).now();
 
-		// Create a new Profile entity from the
-		// userId, displayName, mainEmail and teeShirtSize
-		Profile profile = new Profile(userId, displayName, mainEmail, teeShirtSize);
+    if (profile == null) {
+      // TODO 2
+      // If the displayName is null, set it to the default value based on the user's email
+      // by calling extractDefaultDisplayNameFromEmail(...)
+      if (displayName == null) {
+         displayName = extractDefaultDisplayNameFromEmail(user.getEmail());
+         }
+
+      // Create a new Profile entity from the
+      // userId, displayName, mainEmail and teeShirtSize
+      profile = new Profile(userId, displayName, mainEmail, teeShirtSize);
+    } else {
+      profile.update(displayName,teeShirtSize);
+    }
 
 		// TODO 3 (In lesson 3)
 		// Save the entity in the datastore
